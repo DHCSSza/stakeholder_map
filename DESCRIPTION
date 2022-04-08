@@ -1,0 +1,18 @@
+Package: stakeholder.map.project
+Title: Test of 'tokencodr' with Google Sheets & Drive on Github Actions
+Version: 0.0.0.9000
+Authors@R: 
+    person("Anne", "Treasure", , "anne@talarify.co.za", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8345-4811"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: es
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9000
+Imports: 
+    googlesheets4,
+    tokencodr (>= 0.0.0.9000)
+Remotes: 
+    jdtrat/tokencodr
