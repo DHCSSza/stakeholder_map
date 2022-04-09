@@ -1,1 +1,43 @@
+name: run_r_script_kumu
+
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron: '35 19 * * *'
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+    
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GSHEET_ACCESS_PASSWORD: ${{ secrets.GSHEET_ACCESS_PASSWORD }}
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # set up R 
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+      
+      # set up Pandoc
+      - uses: r-lib/actions/setup-pandoc@master
+      
+      - name: step-1-install-packages & Query dependencies
+        run: |
+          install.packages('tidyverse')
+          install.packages('googlesheets4')
+          install.packages('remotes')
+          remotes::install_github("jdtrat/tokencodr")
+        shell: Rscript {0}
+          
+      - name: step-2-run-script
+        run: 
+          Rscript -e "source('scripts/2a_data_for_kumu.R')"
 
