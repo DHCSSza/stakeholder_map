@@ -3,7 +3,7 @@ name: run_r_script_kumu
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '53 08 * * *'
+    - cron: '40 09 * * *'
 
 jobs:
   # This workflow contains a single job called "build"
