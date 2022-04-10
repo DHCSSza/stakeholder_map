@@ -2,40 +2,41 @@ name: run_r_script_kumu
 
 # Controls when the workflow will run
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '23 13 * * *'
+    - cron: "35 13 * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     
     env:
-      MY_GITHUB_REPO: ${{ github.repository }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GSHEET_ACCESS_PASSWORD: ${{ secrets.GSHEET_ACCESS_PASSWORD }}
-      R_KEEP_PKG_SOURCE: yes
-    
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v1
+      - name: setup R
+        uses: r-lib/actions/setup-r@master
         with:
-          use-public-rspm: true
-          
-      - name: Manually install libsodium
-        run: 'sudo apt-get install -y libsodium-dev'
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
 
-      - name: Setup R Dependencies
-        uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          cache-version: 1
+      - name: step-1-install-packages & Query dependencies
+        run: |
+          install.packages('tidyverse')
+          install.packages('googlesheets4')
+          install.packages('remotes')
+          remotes::install_github("jdtrat/tokencodr")
+        shell: Rscript {0}
           
       - name: Run-r-script
         run: 
