@@ -29,15 +29,12 @@ jobs:
       # set up Pandoc
       - uses: r-lib/actions/setup-pandoc@master
       
-      - name: step-1-install-packages & Query dependencies
-        run: |
-          install.packages('tidyverse')
-          install.packages('googlesheets4')
-          install.packages('remotes')
-          remotes::install_github("jdtrat/tokencodr")
-        shell: Rscript {0}
+      - name: Setup R Dependencies
+        uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          cache-version: 1
           
-      - name: step-2-run-script
+      - name: Run-r-script
         run: 
           Rscript -e "source('scripts/2a_data_for_kumu.R')"
 
