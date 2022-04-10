@@ -3,7 +3,7 @@ name: run_r_script_kumu
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '18 08 * * *'
+    - cron: '53 08 * * *'
 
 jobs:
   # This workflow contains a single job called "build"
@@ -14,21 +14,22 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GSHEET_ACCESS_PASSWORD: ${{ secrets.GSHEET_ACCESS_PASSWORD }}
+      R_KEEP_PKG_SOURCE: yes
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
       - uses: actions/checkout@v2
       
-      # set up R 
-      - uses: r-lib/actions/setup-r@master
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
         with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
-      
-      # set up Pandoc
-      - uses: r-lib/actions/setup-pandoc@master
-      
+          use-public-rspm: true
+          
+      - name: Manually install libsodium
+        run: 'sudo apt-get install -y libsodium-dev'
+
       - name: Setup R Dependencies
         uses: r-lib/actions/setup-r-dependencies@v1
         with:
