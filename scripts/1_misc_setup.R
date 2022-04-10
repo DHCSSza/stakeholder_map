@@ -20,7 +20,7 @@ usethis::edit_r_environ()
 # https://gargle.r-lib.org/articles/get-api-credentials.html#service-account-token
 # the encrypted json file saved in .secrets folder in GitHub repo
 tokencodr::encrypt_token(service = "GSHEET_ACCESS", # "stakeholder_map"
-                         input = "stakeholder-map-gsheets-access-73ff06fae0e1.json", 
+                         input = "stakeholder-map-gsheets-access-d1943821e2ee.json", 
                          destination = "~/src/sadilar/stakeholder_map/")
 
 # Locally Authenticate Google Sheets & Google Drive

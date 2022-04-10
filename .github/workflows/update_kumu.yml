@@ -3,7 +3,7 @@ name: run_r_script_kumu
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: "35 13 * * *"
+    - cron: "20 14 * * *"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -39,6 +39,6 @@ jobs:
         shell: Rscript {0}
           
       - name: Run-r-script
-        run: 
+        run: | 
           Rscript -e "source('scripts/2a_data_for_kumu.R')"
 
