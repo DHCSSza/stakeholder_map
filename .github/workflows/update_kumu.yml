@@ -3,7 +3,7 @@ name: run_r_script_kumu
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '15 10 * * *'
+    - cron: '11 12 * * *'
 
 jobs:
   # This workflow contains a single job called "build"
@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
+      MY_GITHUB_REPO: ${{ github.repository }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GSHEET_ACCESS_PASSWORD: ${{ secrets.GSHEET_ACCESS_PASSWORD }}
       R_KEEP_PKG_SOURCE: yes
