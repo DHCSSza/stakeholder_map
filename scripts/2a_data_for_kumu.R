@@ -18,7 +18,7 @@ source("functions/func_auth_google.R")
 # Authenticate Google Service Account (adapted from https://github.com/jdtrat/tokencodr-google-demo)
 auth_google(email = "*@talarify.co.za",
             service = "GSHEET_ACCESS",
-            token_path = "stakeholder_map/.secret/GSHEET_ACCESS")
+            token_path = ".secret/GSHEET_ACCESS")
 
 # Read in Google Sheet data
 form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
