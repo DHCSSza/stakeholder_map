@@ -41,4 +41,5 @@ jobs:
       - name: Run-r-script
         run: | 
           Rscript -e "source('scripts/2a_data_for_kumu.R')"
+          Rscript -e "source('scripts/2b_data_for_shiny.R')"
 
