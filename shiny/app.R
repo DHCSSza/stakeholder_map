@@ -19,15 +19,15 @@ source('functions/my_map_activ.R')
 
 ####### ------- AUTHORISATIONS ------- #######
 # this works locally
-gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
+#gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
 
 # for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
-#source("functions/func_auth_google.R")
+source("functions/func_auth_google.R")
 
 # Authenticate Google Service Account
-#auth_google(email = "*@talarify.co.za",
-#            service = "GSHEET_ACCESS",
-#            token_path = ".secret/GSHEET_ACCESS")
+auth_google(email = "*@talarify.co.za",
+            service = "GSHEET_ACCESS",
+            token_path = ".secret/GSHEET_ACCESS")
 
 
 ####### ------- READ in GOOGLE SHEET DATA ------- #######
