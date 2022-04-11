@@ -1,1 +1,31 @@
+INCOMPLETE - STILL WORKING ON THIS
 
+name: deploy-shiny
+
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron: "30 08 * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-shiny:
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: r-lib/actions/setup-r@master
+      
+      - name: Install shiny
+        run: |
+          install.packages(c("shiny", "rsconnect"), type = "binary")
+        shell: Rscript {0}
+        
+      - name: Push to shiny.io
+        run: |
+          Rscript -e "rsconnect::setAccountInfo(name='username', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})"
+          Rscript -e "rsconnect::deployApp(appName = 'sadilar_stakeholder_map')" # the name of the app on shiny.io 
+        shell: Rscript {0}
