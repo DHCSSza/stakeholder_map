@@ -22,31 +22,37 @@ source('functions/my_map_activ.R')
 #gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
 
 # for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
-source("functions/func_auth_google.R")
+#source("functions/func_auth_google.R")
 
 # Authenticate Google Service Account
-auth_google(email = "*@talarify.co.za",
-            service = "GSHEET_ACCESS",
-            token_path = ".secret/GSHEET_ACCESS")
+#auth_google(email = "*@talarify.co.za",
+#            service = "GSHEET_ACCESS",
+#            token_path = ".secret/GSHEET_ACCESS")
 
 
 ####### ------- READ in GOOGLE SHEET DATA ------- #######
-ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
+#ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
 
-locations <- read_sheet(ss, sheet = "Organisation_locations")
+#locations <- read_sheet(ss, sheet = "Organisation_locations")
 
-project <- read_sheet(ss, sheet = "project") %>%
-    merge(locations, by = 'Organisation')
-person <- read_sheet(ss, sheet = "person")%>%
-    merge(locations, by = 'Organisation')
-dataset <- read_sheet(ss, sheet = "dataset")
-tool <- read_sheet(ss, sheet = "tool")
-publication <- read_sheet(ss, sheet = "publication")
-training <- read_sheet(ss, sheet = "training")%>%
-    merge(locations, by = 'Organisation')
-archives <- read_sheet(ss, sheet = "archives")
-learning_material <- read_sheet(ss, sheet = "learning_material")
-unclassified <- read_sheet(ss, sheet = "unclassified")
+#project <- read_sheet(ss, sheet = "project") %>%
+#    merge(locations, by = 'Organisation')
+#person <- read_sheet(ss, sheet = "person")%>%
+#    merge(locations, by = 'Organisation')
+#dataset <- read_sheet(ss, sheet = "dataset")
+#tool <- read_sheet(ss, sheet = "tool")
+#publication <- read_sheet(ss, sheet = "publication")
+#training <- read_sheet(ss, sheet = "training")%>%
+#    merge(locations, by = 'Organisation')
+#archives <- read_sheet(ss, sheet = "archives")
+#learning_material <- read_sheet(ss, sheet = "learning_material")
+#unclassified <- read_sheet(ss, sheet = "unclassified")
+
+
+## LOAD DATA
+
+load("data/shiny_data.RData")
+
 
 ####### ------- CHOICES for ACTIVITIES MAP ------- #######
 choices_record_type <- c('Person', 'Project', 'Training')

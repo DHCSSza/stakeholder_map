@@ -390,30 +390,50 @@ unclassified$methods <- gsub(";, ", "; ", unclassified$methods)
 unclassified$methods <-  gsub('.{1}$', "", unclassified$methods)
 
 
-###### ---------- EXCLUDE DATA SUBMITTER INFO FOR SHINY ---------- ######
-project <- select(project, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-person <- select(person, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-dataset <- select(dataset, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-tool <- select(tool, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-publication <- select(publication, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-training <- select(training, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-archives <- select(archives, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-learning_material <- select(learning_material, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-unclassified <- select(unclassified, -c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+####### ------- READ in GOOGLE SHEET DATA FOR LOCATIONS ------- #######
+ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
+locations <- read_sheet(ss, sheet = "Organisation_locations")
+
+
+###### ---------- EXCLUDE DATA SUBMITTER INFO FOR SHINY, MERGE W/LOCATIONS ---------- ######
+project <- project %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
+  merge(locations, by = 'Organisation')
+person <-  person %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
+  merge(locations, by = 'Organisation')
+dataset <- dataset %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+tool <- tool %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+publication <- publication %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+training <-  training %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
+  merge(locations, by = 'Organisation')
+archives <- archives %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+learning_material <- learning_material %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+unclassified <- unclassified %>%
+  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+
+### SAVE RDATA FILE
+save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/data/shiny_data.RData")
 
 
 ###### ---------- WRITE DATA SHEETS FOR Shiny ---------- ######
 ##### write to Google spreadsheet ##### 
 
-ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
+#ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
 
-sheet_write(project, ss = ss, sheet = "project")
-sheet_write(person, ss = ss, sheet = "person")
-sheet_write(dataset, ss = ss, sheet = "dataset")
-sheet_write(tool, ss = ss, sheet = "tool")
-sheet_write(publication, ss = ss, sheet = "publication")
-sheet_write(training, ss = ss, sheet = "training")
-sheet_write(archives, ss = ss, sheet = "archives")
-sheet_write(learning_material, ss = ss, sheet = "learning_material")
-sheet_write(unclassified, ss = ss, sheet = "unclassified")
+#sheet_write(project, ss = ss, sheet = "project")
+#sheet_write(person, ss = ss, sheet = "person")
+#sheet_write(dataset, ss = ss, sheet = "dataset")
+#sheet_write(tool, ss = ss, sheet = "tool")
+#sheet_write(publication, ss = ss, sheet = "publication")
+#sheet_write(training, ss = ss, sheet = "training")
+#sheet_write(archives, ss = ss, sheet = "archives")
+#sheet_write(learning_material, ss = ss, sheet = "learning_material")
+#sheet_write(unclassified, ss = ss, sheet = "unclassified")
 
