@@ -4,7 +4,6 @@
 # remotes::install_github("jdtrat/tokencodr")
 library(tokencodr)
 library(googlesheets4)
-library(googledrive)
 
 # Run once and copy password to .Renviron
 # Added this to GitHub repository secrets, with the name "GSHEET_ACCESS_PASSWORD"
@@ -20,7 +19,7 @@ usethis::edit_r_environ()
 # https://gargle.r-lib.org/articles/get-api-credentials.html#service-account-token
 # the encrypted json file saved in .secrets folder in GitHub repo
 tokencodr::encrypt_token(service = "GSHEET_ACCESS", # "stakeholder_map"
-                         input = "stakeholder-map-gsheets-access-d1943821e2ee.json", 
+                         input = "[json filename].json", 
                          destination = "~/src/sadilar/stakeholder_map/")
 
 # Locally Authenticate Google Sheets & Google Drive
