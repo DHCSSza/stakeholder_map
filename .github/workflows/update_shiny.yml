@@ -51,7 +51,7 @@ jobs:
         shell: Rscript {0}
         
       - name: Uploading to shinyapps.io
-        run: rsconnect::deployApp('shiny_stakeholder_map', getOption("rsconnect.force.update.apps", TRUE))
+        run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appName = "app",  getOption("rsconnect.force.update.apps", TRUE))
         shell: Rscript {0}
       
           
