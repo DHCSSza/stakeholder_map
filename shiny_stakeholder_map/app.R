@@ -14,8 +14,8 @@ options(shiny.usecairo=T)
 
 
 ####### ------- LOAD FUNCTIONS ------- #######
-source('functions/my_map_activ.R')
-
+#source('functions/my_map_activ.R')
+source('my_map_activ.R')
 
 ####### ------- AUTHORISATIONS ------- #######
 # this works locally
@@ -50,8 +50,8 @@ source('functions/my_map_activ.R')
 
 
 ####### ------- LOAD DATA ------- #######
-load("data/shiny_data.RData")
-
+#load("data/shiny_data.RData")
+load("shiny_data.RData")
 
 ####### ------- CHOICES for ACTIVITIES MAP ------- #######
 choices_record_type <- c('Person', 'Project', 'Training')
