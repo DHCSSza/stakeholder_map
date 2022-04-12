@@ -419,7 +419,7 @@ unclassified <- unclassified %>%
   select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
 
 ### SAVE RDATA FILE
-save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/data/shiny_data.RData")
+save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/shiny_data.RData")
 
 
 ###### ---------- WRITE DATA SHEETS FOR Shiny ---------- ######
