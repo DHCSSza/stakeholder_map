@@ -44,7 +44,7 @@ jobs:
           Rscript -e "source('scripts/2b_data_for_shiny.R')"
        
       - name: Commit RData file
-        uses: DHCSSza/stakeholder_map/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: main
           commit_message: Update Rdata file
