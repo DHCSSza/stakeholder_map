@@ -49,4 +49,21 @@ jobs:
           branch: main
           commit_message: Update Rdata file
           
+      - name: Connect to Shiny
+        env:
+        # set as environment variables, don't worry they will
+        # never be printed/echoed in logs
+        SHINY_TOKEN: ${{ secrets.SHINY_TOKEN }}
+        SHINY_SECRET: ${{ secrets.SHINY_SECRET }}
+        run: |
+          shiny_token = Sys.getenv("SHINY_TOKEN")
+          shiny_secret = Sys.getenv("SHINY_SECRET")
+          rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
+        shell: Rscript {0}
+        
+      - name: Uploading to shinyapps.io
+        run: rsconnect::deployApp('shiny_stakeholder_map', getOption("rsconnect.force.update.apps", TRUE))
+        shell: Rscript {0}
+      
+          
 
