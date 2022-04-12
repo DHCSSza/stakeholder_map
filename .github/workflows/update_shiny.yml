@@ -40,6 +40,7 @@ jobs:
           install.packages('leaflet')
           install.packages('DT')
           install.packages('tableHTML')
+          install.packages('rsconnect')
         shell: Rscript {0}
           
       - name: Connect to Shiny
