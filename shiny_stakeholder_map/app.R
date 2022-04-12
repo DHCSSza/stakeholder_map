@@ -49,8 +49,7 @@ source('functions/my_map_activ.R')
 #unclassified <- read_sheet(ss, sheet = "unclassified")
 
 
-## LOAD DATA
-
+####### ------- LOAD DATA ------- #######
 load("data/shiny_data.RData")
 
 

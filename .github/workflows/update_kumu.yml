@@ -3,7 +3,7 @@ name: run_r_script_kumu
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: "30 08 * * *"
+    - cron: "00 06 * * *"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,4 +42,11 @@ jobs:
         run: | 
           Rscript -e "source('scripts/2a_data_for_kumu.R')"
           Rscript -e "source('scripts/2b_data_for_shiny.R')"
+       
+      - name: Commit RData file
+        uses: DHCSSza/git-auto-commit-action@v4
+        with:
+          branch: main
+          commit_message: Update Rdata file
+          
 
