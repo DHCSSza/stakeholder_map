@@ -29,7 +29,8 @@ jobs:
       - name: setup R
         uses: r-lib/actions/setup-r@master
         with:
-          r-version: ${{ matrix.config.r }}
+          #r-version: ${{ matrix.config.r }}
+          r-version: '4.1.3'
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
       - name: step-1-install-packages
