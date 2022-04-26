@@ -1,1 +1,5 @@
 https://github.com/anelda/showcaseR-periodic-table/blob/master/periodic-table-dashboard.Rmd
+
+Shiny app tables: adjust column widths
+https://community.rstudio.com/t/extend-width-of-column-with-renderdatatable-in-shiny/50906
+
