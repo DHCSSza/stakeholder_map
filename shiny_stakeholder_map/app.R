@@ -12,45 +12,12 @@ library(tableHTML)
 # usecairo = T from package Cairo for better quality of figures in shiny app
 options(shiny.usecairo=T)
 
-
 ####### ------- LOAD FUNCTIONS ------- #######
-#source('functions/my_map_activ.R')
+#source('shiny_stakeholder_map/my_map_activ.R') # for local deployment
 source('my_map_activ.R')
 
-####### ------- AUTHORISATIONS ------- #######
-# this works locally
-#gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
-
-# for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
-#source("functions/func_auth_google.R")
-
-# Authenticate Google Service Account
-#auth_google(email = "*@talarify.co.za",
-#            service = "GSHEET_ACCESS",
-#            token_path = ".secret/GSHEET_ACCESS")
-
-
-####### ------- READ in GOOGLE SHEET DATA ------- #######
-#ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
-
-#locations <- read_sheet(ss, sheet = "Organisation_locations")
-
-#project <- read_sheet(ss, sheet = "project") %>%
-#    merge(locations, by = 'Organisation')
-#person <- read_sheet(ss, sheet = "person")%>%
-#    merge(locations, by = 'Organisation')
-#dataset <- read_sheet(ss, sheet = "dataset")
-#tool <- read_sheet(ss, sheet = "tool")
-#publication <- read_sheet(ss, sheet = "publication")
-#training <- read_sheet(ss, sheet = "training")%>%
-#    merge(locations, by = 'Organisation')
-#archives <- read_sheet(ss, sheet = "archives")
-#learning_material <- read_sheet(ss, sheet = "learning_material")
-#unclassified <- read_sheet(ss, sheet = "unclassified")
-
-
 ####### ------- LOAD DATA ------- #######
-#load("data/shiny_data.RData")
+#load("shiny_stakeholder_map/shiny_data.RData") # for local deployment
 load("shiny_data.RData")
 
 ####### ------- CHOICES for ACTIVITIES MAP ------- #######

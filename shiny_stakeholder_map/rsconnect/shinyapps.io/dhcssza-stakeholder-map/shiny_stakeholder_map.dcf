@@ -1,0 +1,13 @@
+name: shiny_stakeholder_map
+title: shiny_stakeholder_map
+username:
+account: dhcssza-stakeholder-map
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6173284
+bundleId: 5837446
+url: https://dhcssza-stakeholder-map.shinyapps.io/shiny_stakeholder_map/
+when: 1650958889.93214
+lastSyncTime: 1650958889.93216
+asMultiple: FALSE
+asStatic: FALSE
