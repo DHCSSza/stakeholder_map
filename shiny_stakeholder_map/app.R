@@ -45,7 +45,7 @@ ui <- (fluidPage(
                          #h4('DH and CSS landscape in South Africa'),
                          p("This map shows data on Digital Humanities (DH) and Computational Social Sciences (CSS) activities and initiatives in South Africa."),
                          p('Records from locations close to each other are grouped together.
-                    To ungroup, click on a green circle and see individual locations, click again to see individual beneficiaries at one location. Click on', strong(em('Reset map view')), 'to get back to the orginal view.'),
+                    To ungroup, click on a green circle to see individual locations. Click again to see individual records at one location. Click on', strong(em('Reset map view')), 'to get back to the orginal view.'),
                          leafletOutput("my_map_activities"),
                      ) # end mainPanel
         ), # end tabPanel 1
@@ -127,41 +127,87 @@ server <- function(input, output){
     
     # ----- output (table) for 2nd panel (projects table) -----
     output$mytable_project = DT::renderDataTable({
-        project
-    })
+         datatable(project, escape=FALSE, 
+                   options = list(
+                       pageLength = 20, autoWidth = TRUE,
+                       columnDefs = list(list( targets = 7, width = '600px')),
+                       scrollX = TRUE
+                   ))
+     })
     # ----- output (table) for 3nd panel (people table) -----
     output$mytable_person = DT::renderDataTable({
-        person
+        datatable(person, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 8, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 4th panel (dataset table) -----
     output$mytable_dataset = DT::renderDataTable({
-        dataset
-    })    
+        datatable(dataset, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 7, width = '600px')),
+                      scrollX = TRUE
+                  ))
+    })
     # ----- output (table) for 5th panel (tool table) -----
     output$mytable_tool = DT::renderDataTable({
-        tool
+        datatable(tool, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 7, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 6th panel (publication table) -----
     output$mytable_publication = DT::renderDataTable({
-        publication
+        datatable(publication, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 4, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 7th panel (training table) -----
     output$mytable_training = DT::renderDataTable({
-        training
+        datatable(training, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 9, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 8th panel (learning_material table) -----
     output$mytable_learning_material = DT::renderDataTable({
-        learning_material
+        datatable(learning_material, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 7, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 9th panel (archives table) -----
     output$mytable_archives = DT::renderDataTable({
-        archives
+        datatable(archives, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 7, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
     # ----- output (table) for 10th panel (unclassified table) -----
     output$mytable_unclassified = DT::renderDataTable({
-        unclassified
+        datatable(unclassified, escape=FALSE, 
+                  options = list(
+                      pageLength = 20, autoWidth = TRUE,
+                      columnDefs = list(list( targets = 7, width = '600px')),
+                      scrollX = TRUE
+                  ))
     })
 } # end server
 
 # Run the application
 shinyApp(ui, server)
+
