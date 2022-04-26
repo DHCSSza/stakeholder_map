@@ -48,11 +48,13 @@ jobs:
         run: |
           shiny_token = Sys.getenv("SHINY_TOKEN")
           shiny_secret = Sys.getenv("SHINY_SECRET")
-          rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
+          #rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
+          rsconnect::setAccountInfo(name='dhcssza-stakeholder-map', token=shiny_token, secret=shiny_secret)
         shell: Rscript {0}
         
       - name: Uploading to shinyapps.io
-        run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'anne-treasure', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
+        #run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'anne-treasure', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
+        run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'dhcssza-stakeholder-map', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
         shell: Rscript {0}
       
           
