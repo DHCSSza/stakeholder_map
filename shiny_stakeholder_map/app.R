@@ -13,12 +13,12 @@ library(tableHTML)
 options(shiny.usecairo=T)
 
 ####### ------- LOAD FUNCTIONS ------- #######
-source('shiny_stakeholder_map/my_map_activ.R') # for local deployment
-#source('my_map_activ.R')
+#source('shiny_stakeholder_map/my_map_activ.R') # for local deployment
+source('my_map_activ.R')
 
 ####### ------- LOAD DATA ------- #######
-load("shiny_stakeholder_map/shiny_data.RData") # for local deployment
-#load("shiny_data.RData")
+#load("shiny_stakeholder_map/shiny_data.RData") # for local deployment
+load("shiny_data.RData")
 
 ####### ------- CHOICES for ACTIVITIES MAP ------- #######
 choices_record_type <- c('Person', 'Project', 'Training')
