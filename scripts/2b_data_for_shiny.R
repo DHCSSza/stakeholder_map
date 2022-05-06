@@ -27,7 +27,8 @@ form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPj
 ###### ---------- Record type: PROJECT ---------- ######
 project <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Project") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "2"))))
+  select(c("Timestamp", "Email Address", starts_with(c("1.", "2")))) %>%
+  unite("Contact name", 6:8, sep = " ", remove = FALSE)
 
 names(project) <-
   c(
@@ -36,13 +37,14 @@ names(project) <-
     "data_submitter_name",
     "data_submitter_email",
     "Type",
+    "Contact name",
     "contact_first_names",
     "contact_surname",
     "contact_title",
-    "Label",
+    "Name",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
     "language_primary",
@@ -52,22 +54,22 @@ names(project) <-
     "Funders",
     "URL",
     "Email",
-    "project_outputs"
+    "Project_outputs"
   )
 
 # fix punctuation for subject area & methods
 project$Subjects <- gsub(";, ", "; ", project$Subjects)
 project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
 
-project$methods <- gsub(";, ", "; ", project$methods)
-project$methods <-  gsub('.{1}$', "", project$methods)
+project$Methods <- gsub(";, ", "; ", project$Methods)
+project$Methods <-  gsub('.{1}$', "", project$Methods)
 
 
 ###### ---------- Record type: PERSON ---------- ######
 person <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Person") %>%
   select(c("Timestamp", "Email Address", starts_with(c("1.", "3")))) %>%
-  unite("Label", 6:8, sep = " ", remove = FALSE)
+  unite("Name", 6:8, sep = " ", remove = FALSE)
 
 names(person) <-
   c(
@@ -76,7 +78,7 @@ names(person) <-
     "data_submitter_name",
     "data_submitter_email",
     "Type",
-    "Label",
+    "Name",
     "title",
     "first_names",
     "surname",
@@ -84,7 +86,7 @@ names(person) <-
     "Description",
     "keywords",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
     "job_title",
@@ -100,8 +102,8 @@ names(person) <-
 person$Subjects <- gsub(";, ", "; ", person$Subjects)
 person$Subjects <-  gsub('.{1}$', "", person$Subjects) # remove ; at the end
 
-person$methods <- gsub(";, ", "; ", person$methods)
-person$methods <-  gsub('.{1}$', "", person$methods)
+person$Methods <- gsub(";, ", "; ", person$Methods)
+person$Methods <-  gsub('.{1}$', "", person$Methods)
 
 
 ###### ---------- Record type: DATASET ---------- ######
@@ -252,10 +254,10 @@ names(training) <-
     "contact_title",
     "contact_email",
     "training_type",
-    "Label",
+    "Name",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
     "year",
@@ -274,8 +276,8 @@ names(training) <-
 training$Subjects <- gsub(";, ", "; ", training$Subjects)
 training$Subjects <-  gsub('.{1}$', "", training$Subjects) # remove ; at the end
 
-training$methods <- gsub(";, ", "; ", training$methods)
-training$methods <-  gsub('.{1}$', "", training$methods)
+training$Methods <- gsub(";, ", "; ", training$Methods)
+training$Methods <-  gsub('.{1}$', "", training$Methods)
 
 ###### ---------- Record type: ARCHIVES ---------- ######
 archives <- form_data %>%
@@ -421,19 +423,4 @@ unclassified <- unclassified %>%
 ### SAVE RDATA FILE
 save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/shiny_data.RData")
 
-
-###### ---------- WRITE DATA SHEETS FOR Shiny ---------- ######
-##### write to Google spreadsheet ##### 
-
-#ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
-
-#sheet_write(project, ss = ss, sheet = "project")
-#sheet_write(person, ss = ss, sheet = "person")
-#sheet_write(dataset, ss = ss, sheet = "dataset")
-#sheet_write(tool, ss = ss, sheet = "tool")
-#sheet_write(publication, ss = ss, sheet = "publication")
-#sheet_write(training, ss = ss, sheet = "training")
-#sheet_write(archives, ss = ss, sheet = "archives")
-#sheet_write(learning_material, ss = ss, sheet = "learning_material")
-#sheet_write(unclassified, ss = ss, sheet = "unclassified")
 

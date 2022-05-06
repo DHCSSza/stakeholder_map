@@ -130,7 +130,7 @@ server <- function(input, output){
          datatable(project, escape=FALSE, 
                    options = list(
                        pageLength = 20, autoWidth = TRUE,
-                       columnDefs = list(list( targets = 7, width = '600px')),
+                       columnDefs = list(list( targets = c("Description", "Name"), width = '600px')),
                        scrollX = TRUE
                    ))
      })
@@ -139,7 +139,7 @@ server <- function(input, output){
         datatable(person, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 8, width = '600px')),
+                      columnDefs = list(list( targets = c("Description", "Subjects", "Methods"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
