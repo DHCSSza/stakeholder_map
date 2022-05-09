@@ -127,7 +127,7 @@ server <- function(input, output){
     
     # ----- output (table) for 2nd panel (projects table) -----
     output$mytable_project = DT::renderDataTable({
-         datatable(project, escape=FALSE, 
+         datatable(project[(1:(ncol(project)-2))], escape=FALSE, 
                    options = list(
                        pageLength = 20, autoWidth = TRUE,
                        columnDefs = list(list( targets = c("Description", "Name"), width = '600px')),
@@ -136,7 +136,7 @@ server <- function(input, output){
      })
     # ----- output (table) for 3nd panel (people table) -----
     output$mytable_person = DT::renderDataTable({
-        datatable(person, escape=FALSE, 
+        datatable(person[(1:(ncol(project)-2))], escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
                       columnDefs = list(list( targets = c("Description", "Subjects", "Methods"), width = '600px')),
@@ -148,7 +148,7 @@ server <- function(input, output){
         datatable(dataset, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 7, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -157,7 +157,7 @@ server <- function(input, output){
         datatable(tool, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 7, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -166,16 +166,16 @@ server <- function(input, output){
         datatable(publication, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 4, width = '600px')),
+                      columnDefs = list(list( targets = c("Abstract"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
     # ----- output (table) for 7th panel (training table) -----
     output$mytable_training = DT::renderDataTable({
-        datatable(training, escape=FALSE, 
+        datatable(training[(1:(ncol(project)-2))], escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 9, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -184,7 +184,7 @@ server <- function(input, output){
         datatable(learning_material, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 7, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -193,7 +193,7 @@ server <- function(input, output){
         datatable(archives, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 7, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -202,7 +202,7 @@ server <- function(input, output){
         datatable(unclassified, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = 7, width = '600px')),
+                      columnDefs = list(list( targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })

@@ -9,7 +9,7 @@ library(googlesheets4)
 
 ###### ---------- AUTHORISATIONS ---------- ######
 # this works locally
-#gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
+gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
 #gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/sheets_service_account_key.json") # before making the json a secret
 
 # for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
@@ -27,40 +27,32 @@ form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPj
 ###### ---------- Record type: PROJECT ---------- ######
 project <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Project") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "2")))) %>%
-  unite("Contact name", 6:8, sep = " ", remove = FALSE)
+  select(starts_with(c("1.", "2"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(project) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
     "Contact name",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
     "Name",
     "Description",
     "Subjects",
     "Methods",
     "Organisation",
     "Organisation_other",
-    "language_primary",
-    "status",
-    "year_start",
-    "year_end",
+    "Primary language(s)",
+    "Status",
+    "Year project started",
+    "Year project ended",
     "Funders",
     "URL",
     "Email",
-    "Project_outputs"
+    "Project outputs"
   )
 
 # fix punctuation for subject area & methods
 project$Subjects <- gsub(";, ", "; ", project$Subjects)
 project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
-
 project$Methods <- gsub(";, ", "; ", project$Methods)
 project$Methods <-  gsub('.{1}$', "", project$Methods)
 
@@ -68,40 +60,32 @@ project$Methods <-  gsub('.{1}$', "", project$Methods)
 ###### ---------- Record type: PERSON ---------- ######
 person <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Person") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "3")))) %>%
-  unite("Name", 6:8, sep = " ", remove = FALSE)
+  select(starts_with(c("1.", "3"))) %>%
+  unite("Name", 4:6, sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(person) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
     "Name",
-    "title",
-    "first_names",
-    "surname",
     "Email",
     "Description",
-    "keywords",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
     "Organisation_other",
-    "job_title",
-    "career_stage",
-    "orcid",
+    "Job title",
+    "Career stage",
+    "Orcid ID",
     "URL",
-    "linkedin_url",
-    "researchgate_url",
-    "twitter"
+    "LinkedIn",
+    "ResearchGate",
+    "Twitter"
   )
 
 # fix punctuation for subject area & methods
 person$Subjects <- gsub(";, ", "; ", person$Subjects)
 person$Subjects <-  gsub('.{1}$', "", person$Subjects) # remove ; at the end
-
 person$Methods <- gsub(";, ", "; ", person$Methods)
 person$Methods <-  gsub('.{1}$', "", person$Methods)
 
@@ -109,79 +93,68 @@ person$Methods <-  gsub('.{1}$', "", person$Methods)
 ###### ---------- Record type: DATASET ---------- ######
 dataset <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Dataset") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "4"))))
+  select(starts_with(c("1.", "4"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(dataset) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
-    "Label",
+    "Contact name",
+    "Contact email",
+    "Name",
     "Description",
-    "keywords",
+    "Keywords",
     "Subjects",
-    "methods",
-    "status",
-    "publisher",
-    "repository",
-    "publication_year",
-    "language_primary",
-    "language_other",
-    "identifier",
-    "licence",
-    "paywall",
-    "machine_readable",
+    "Methods",
+    "Status",
+    "Publisher",
+    "Repository",
+    "Publication year",
+    "Primary language(s)",
+    "Other language(s)",
+    "Identifier",
+    "Licence",
+    "Paywall",
+    "Machine readable",
     "URL",
-    "dataset_format"
+    "Dataset format"
   )
 
 # fix punctuation for subject area & methods
 dataset$Subjects <- gsub(";, ", "; ", dataset$Subjects)
 dataset$Subjects <-  gsub('.{1}$', "", dataset$Subjects) # remove ; at the end
-
-dataset$methods <- gsub(";, ", "; ", dataset$methods)
-dataset$methods <-  gsub('.{1}$', "", dataset$methods)
+dataset$Methods <- gsub(";, ", "; ", dataset$Methods)
+dataset$Methods <-  gsub('.{1}$', "", dataset$Methods)
 
 
 ###### ---------- Record type: TOOL ---------- ######
 tool <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Tool") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "5"))))
+  select(starts_with(c("1.", "5"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(tool) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
+    "Contact name",
+    "Contact email",
     "Label",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
-    "language_primary",
-    "language_other",
-    "year_created",
-    "year_updated",
-    "analysis_type",
-    "tool_run",
-    "usage",
-    "TaDiRAH_methods",
-    "licence",
-    "status",
-    "TaDiRAH_goals",
+    "Primary language(s)",
+    "Other language(s)",
+    "Year created",
+    "Year updated",
+    "Analysis type",
+    "Tool run",
+    "Usage",
+    "TaDiRAH methods",
+    "Licence",
+    "Status",
+    "TaDiRAH goals",
     "Funders",
     "URL"
   )
@@ -189,207 +162,177 @@ names(tool) <-
 # fix punctuation for subject area & methods
 tool$Subjects <- gsub(";, ", "; ", tool$Subjects)
 tool$Subjects <-  gsub('.{1}$', "", tool$Subjects) # remove ; at the end
-
-tool$methods <- gsub(";, ", "; ", tool$methods)
-tool$methods <-  gsub('.{1}$', "", tool$methods)
+tool$Methods <- gsub(";, ", "; ", tool$Methods)
+tool$Methods <-  gsub('.{1}$', "", tool$Methods)
 
 
 ###### ---------- Record type: PUBLICATION ---------- ######
 publication <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Publication") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "6"))))
+  select(starts_with(c("1.", "6"))) %>%
+  select(-c(1:3))
 
 names(publication) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "publication_type",
-    "title",
-    "abstract",
-    "authors",
+    "Publication type",
+    "Title",
+    "Abstract",
+    "Authors",
     "Subjects",
-    "methods",
-    "language_primary",
-    "language_other",
-    "status",
-    "publisher",
-    "volume_no",
-    "start_page_no",
-    "end_page_no",
-    "publication_year",
-    "conference_name",
-    "conference_start_date",
-    "identifier",
-    "licence",
-    "paywall",
+    "Methods",
+    "Primary language(s)",
+    "Other language(s)",
+    "Status",
+    "Publisher",
+    "Volume number",
+    "Start page number",
+    "End page number",
+    "Publication year",
+    "Conference name",
+    "Conference start date",
+    "Identifier",
+    "Licence",
+    "Paywall",
     "URL",
-    "zotero_library"
+    "Zotero library addition"
   )
 
 # fix punctuation for subject area & methods
 publication$Subjects <- gsub(";, ", "; ", publication$Subjects)
 publication$Subjects <-  gsub('.{1}$', "", publication$Subjects) # remove ; at the end
-
-publication$methods <- gsub(";, ", "; ", publication$methods)
-publication$methods <-  gsub('.{1}$', "", publication$methods)
+publication$Methods <- gsub(";, ", "; ", publication$Methods)
+publication$Methods <-  gsub('.{1}$', "", publication$Methods)
 
 
 ###### ---------- Record type: TRAINING ---------- ######
 training <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Training") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "7", "8", "9"))))
-
+  select(starts_with(c("1.", "7", "8", "9"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
+  
 names(training) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
-    "training_type",
+    "Contact name",
+    "Contact email",
+    "Training type",
     "Name",
     "Description",
     "Subjects",
     "Methods",
     "Organisation",
     "Organisation_other",
-    "year",
-    "length",
-    "frequency",
-    "language_primary",
-    "language_other",
+    "Year",
+    "Length",
+    "Frequency",
+    "Primary language(s)",
+    "Other language(s)",
     "URL",
-    "inperson_or_online",
-    "inperson_organisation_venue",
-    "inperson_organisation_venue_other",
-    "online_type"
+    "In person or online",
+    "In person organisation venue",
+    "In person organisation venue other",
+    "Online type"
   )
 
 # fix punctuation for subject area & methods
 training$Subjects <- gsub(";, ", "; ", training$Subjects)
 training$Subjects <-  gsub('.{1}$', "", training$Subjects) # remove ; at the end
-
 training$Methods <- gsub(";, ", "; ", training$Methods)
 training$Methods <-  gsub('.{1}$', "", training$Methods)
 
 ###### ---------- Record type: ARCHIVES ---------- ######
 archives <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Archives") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "10"))))
+  select(starts_with(c("1.", "10"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(archives) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
-    "Label",
+    "Contact name",
+    "Contact email",
+    "Name",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
-    "year",
-    "language_primary",
-    "language_other",
+    "Year",
+    "Primary language(s)",
+    "Other language(s)",
     "URL"
   )
 
 # fix punctuation for subject area & methods
 archives$Subjects <- gsub(";, ", "; ", archives$Subjects)
 archives$Subjects <-  gsub('.{1}$', "", archives$Subjects) # remove ; at the end
-
-archives$methods <- gsub(";, ", "; ", archives$methods)
-archives$methods <-  gsub('.{1}$', "", archives$methods)
+archives$Methods <- gsub(";, ", "; ", archives$Methods)
+archives$Methods <-  gsub('.{1}$', "", archives$Methods)
 
 
 ###### ---------- Record type: LEARNING MATERIAL ---------- ######
 learning_material <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Learning Material") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "11"))))
+  select(starts_with(c("1.", "11"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
 
 names(learning_material) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
-    "Label",
+    "Contact name",
+    "Contact email",
+    "Name",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
-    "learning_material_type",
-    "year_created",
-    "year_updated",
-    "target_audience",
-    "language_primary",
-    "language_other",
-    "available_online",
-    "material_URL",
-    "licence"
+    "Type",
+    "Year created",
+    "Year updated",
+    "Target audience",
+    "Primary language(s)",
+    "Other language(s)",
+    "Available online",
+    "URL",
+    "Licence"
   )
 
 # fix punctuation for subject area & methods
 learning_material$Subjects <- gsub(";, ", "; ", learning_material$Subjects)
 learning_material$Subjects <-  gsub('.{1}$', "", learning_material$Subjects) # remove ; at the end
-
-learning_material$methods <- gsub(";, ", "; ", learning_material$methods)
-learning_material$methods <-  gsub('.{1}$', "", learning_material$methods)
+learning_material$Methods <- gsub(";, ", "; ", learning_material$Methods)
+learning_material$Methods <-  gsub('.{1}$', "", learning_material$Methods)
 
 
 ###### ---------- Record type: UNCLASSIFIED ---------- ######
 unclassified <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Unclassified") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "12"))))
-
+  select(starts_with(c("1.", "12"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
+  
 names(unclassified) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
-    "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
-    "contact_email",
-    "Label",
+    "Contact name",
+    "Contact email",
+    "Name",
     "Description",
     "Subjects",
-    "methods",
+    "Methods",
     "Organisation",
     "Organisation_other",
-    "year_collected",
-    "language_primary",
-    "language_other",
+    "Year collected",
+    "Primary language(s)",
+    "Other language(s)",
     "URL"
   )
 
 # fix punctuation for subject area & methods
 unclassified$Subjects <- gsub(";, ", "; ", unclassified$Subjects)
 unclassified$Subjects <-  gsub('.{1}$', "", unclassified$Subjects) # remove ; at the end
-
-unclassified$methods <- gsub(";, ", "; ", unclassified$methods)
-unclassified$methods <-  gsub('.{1}$', "", unclassified$methods)
+unclassified$Methods <- gsub(";, ", "; ", unclassified$Methods)
+unclassified$Methods <-  gsub('.{1}$', "", unclassified$Methods)
 
 
 ####### ------- READ in GOOGLE SHEET DATA FOR LOCATIONS ------- #######
@@ -399,26 +342,17 @@ locations <- read_sheet(ss, sheet = "Organisation_locations")
 
 ###### ---------- EXCLUDE DATA SUBMITTER INFO FOR SHINY, MERGE W/LOCATIONS ---------- ######
 project <- project %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
   merge(locations, by = 'Organisation')
 person <-  person %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
   merge(locations, by = 'Organisation')
-dataset <- dataset %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-tool <- tool %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-publication <- publication %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+#dataset <- dataset %>%
+#tool <- tool %>%
+#publication <- publication %>%
 training <-  training %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email")) %>%
   merge(locations, by = 'Organisation')
-archives <- archives %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-learning_material <- learning_material %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
-unclassified <- unclassified %>%
-  select(-c("Timestamp", "email_collected", "data_submitter_name", "data_submitter_email"))
+#archives <- archives %>%
+#learning_material <- learning_material %>%
+#unclassified <- unclassified %>%
 
 ### SAVE RDATA FILE
 save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/shiny_data.RData")
