@@ -28,6 +28,7 @@ choices_record_type <- c('Person', 'Project', 'Training')
 ui <- (fluidPage(
     titlePanel(title = "Digital Humanities and Computational Social Sciences landscape in South Africa"),
     p("The South African Centre for Digital Language Resources (SADiLaR) is a national centre supported by the Department of Science and Innovation (DSI) as part of the South African Research Infrastructure Roadmap (SARIR). SADiLaR has an enabling function, with a focus on all official languages of South Africa, supporting research and development in the domains of language technologies and language-related studies in the humanities and social sciences. Furthermore the centre has a mandate to develop digital humanities capacity in South Africa."),
+    p("The data shown here is from the ongoing stakeholder map project, which aims to collect and share data on Digital Humanities (DH), Computational Social Sciences (CSS), and related activities and initiatives in South Africa. The aim is to provide deeper insight into the breadth of activities in this area, facilitate enhanced networking and collaboration, and support the optimal use of resources."),
     tabsetPanel(
         # ----- input for 1st panel (activities map) -----
         tabPanel('Activities Map',
@@ -43,7 +44,7 @@ ui <- (fluidPage(
                  ), # end sidebarPanel
                      mainPanel(
                          #h4('DH and CSS landscape in South Africa'),
-                         p("This map shows data on Digital Humanities (DH) and Computational Social Sciences (CSS) activities and initiatives in South Africa."),
+                         p("This map shows data on Digital Humanities (DH) and Computational Social Sciences (CSS) activities and initiatives in South Africa including people, projects and training."),
                          p('Records from locations close to each other are grouped together.
                     To ungroup, click on a green circle to see individual locations. Click again to see individual records at one location. Click on', strong(em('Reset map view')), 'to get back to the orginal view.'),
                          leafletOutput("my_map_activities"),
