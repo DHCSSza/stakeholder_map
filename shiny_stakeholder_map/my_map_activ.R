@@ -3,6 +3,7 @@ my_map_activ <- function(x){
 ###### ---------- LOAD LIBRARIES ---------- ######
 library(tidyverse)
 library(leaflet)
+library(htmltools)
   
 icons <- awesomeIcons(
     icon = 'ios-close',
@@ -11,7 +12,12 @@ icons <- awesomeIcons(
     markerColor = new
   )
 
-  
+# to break labels over 2 lines
+labs <- lapply(seq(nrow(x)), function(i) {
+  paste0( '<p>', x[i, "Name"], '<p></p>', 
+          x[i, "Organisation"], '</p>' ) 
+})
+
 ###### ---------- DRAW MAP ---------- ######
   my_map <- leaflet(x) %>%
     addTiles() %>%
@@ -19,10 +25,8 @@ icons <- awesomeIcons(
     addAwesomeMarkers(lng = ~long,
                      lat = ~lat,
                      icon = icons,
-                     #popup = ~paste(Name,"|"," Subjects include: ", Subjects),
-                     label = ~paste(Name, " at ", Organisation),
+                     label = lapply(labs, htmltools::HTML),
                      popup = ~paste(Name, " <br>Subjects include: ", Subjects),
-                     #label = ~paste(Name, Organisation),
                      clusterOptions = markerClusterOptions()
     )
   
