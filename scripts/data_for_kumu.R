@@ -9,7 +9,7 @@ library(googlesheets4)
 
 ###### ---------- AUTHORISATIONS ---------- ######
 # this works locally
-#gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
+gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
 #gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/sheets_service_account_key.json") # before making the json a secret
 
 # for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
@@ -21,84 +21,82 @@ auth_google(email = "*@talarify.co.za",
             token_path = ".secret/GSHEET_ACCESS")
 
 ###### ---------- READ DATA FROM GOOGLE SHEET ---------- ######
-form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
+#form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
+
+form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1wuDaWIZD6Mtss-zTEE-zoG4zTx9ZupqaMmc0NBqI8Ls/edit?resourcekey#gid=661338273")
 
 
 ###### ---------- Record type: PROJECT ---------- ######
 project <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Project") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "2")))) %>%
-  unite("Tags", 11:12, sep = ", ", remove = FALSE)
+  select(starts_with(c("1.", "2"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  unite("Tags", 11:12, sep = ", ", remove = FALSE) %>%
+  select(-c(1:2, 5:7))
 
 names(project) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
     "Type",
-    "contact_first_names",
-    "contact_surname",
-    "contact_title",
+    "Contact name",
     "Label",
     "Description",
+    "Keywords",
     "Tags",
-    "subject_area",
-    "methods",
+    "Subjects",
+    "Methods",
     "Organisation",
     "Organisation_other",
-    "language_primary",
-    "status",
-    "year_start",
-    "year_end",
+    "Primary language(s)",
+    "Status",
+    "Year project started",
+    "Year project ended",
     "Funders",
     "URL",
     "Email",
-    "project_outputs"
+    "Project outputs"
   )
 
 # fix punctuation for subject area & methods
-project$subject_area <- gsub(";, ", ";", project$subject_area)
-project$methods <- gsub(";, ", ";", project$methods)
+project$Subjects <- gsub(";, ", "; ", project$Subjects)
+project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
+project$Methods <- gsub(";, ", "; ", project$Methods)
+project$Methods <-  gsub('.{1}$', "", project$Methods)
+
 
 ###### ---------- Record type: PERSON ---------- ######
 person <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Person") %>%
-  select(c("Timestamp", "Email Address", starts_with(c("1.", "3")))) %>%
-  unite("Tags", 12:13, sep = ", ", remove = FALSE) %>%
-  unite("Label", 6:8, sep = " ", remove = FALSE)
-
+  select(starts_with(c("1.", "3"))) %>%
+  unite("Label", 4:6, sep = " ", remove = FALSE) %>%
+  unite("Tags", 11:12, sep = ", ", remove = FALSE) %>%
+  select(-c(1:2, 5:7))
+  
 names(person) <-
   c(
-    "Timestamp",
-    "email_collected",
-    "data_submitter_name",
-    "data_submitter_email",
     "Type",
     "Label",
-    "title",
-    "first_names",
-    "surname",
     "Email",
     "Description",
-    "keywords",
+    "Keywords",
     "Tags",
-    "subject_area",
-    "methods",
+    "Subjects",
+    "Methods",
     "Organisation",
-    "Other",
-    "job_title",
-    "career_stage",
-    "orcid",
+    "Organisation_other",
+    "Job title",
+    "Career stage",
+    "Orcid ID",
     "URL",
-    "linkedin_url",
-    "researchgate_url",
-    "twitter"
+    "LinkedIn",
+    "ResearchGate",
+    "Twitter"
   )
 
 # fix punctuation for subject area & methods
-person$subject_area <- gsub(";, ", ";", person$subject_area)
-person$methods <- gsub(";, ", ";", person$methods)
+project$Subjects <- gsub(";, ", "; ", project$Subjects)
+project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
+project$Methods <- gsub(";, ", "; ", project$Methods)
+project$Methods <-  gsub('.{1}$', "", project$Methods)
 
 # Kumu sheets
 kumu_project <- project %>%
@@ -112,6 +110,8 @@ kumu_person <- person %>%
 kumu <- rbind(kumu_person, kumu_project)
 # replace ;, with |
 kumu$Tags <- gsub(";,", " | ", kumu$Tags)
+kumu$Tags <-  gsub('.{1}$', "", kumu$Tags) # remove ; at the end
+
 
 ##### write to google spreadsheet
 ss = "https://docs.google.com/spreadsheets/d/1PIbPFc0Ye6YqTiWmaL839L88EvO6HrKJI0XbzeyN084/edit#gid=0"
