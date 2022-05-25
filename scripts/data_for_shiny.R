@@ -21,7 +21,9 @@ auth_google(email = "*@talarify.co.za",
             token_path = ".secret/GSHEET_ACCESS")
 
 ###### ---------- READ DATA FROM GOOGLE SHEET ---------- ######
-form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
+#form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
+
+form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1wuDaWIZD6Mtss-zTEE-zoG4zTx9ZupqaMmc0NBqI8Ls/edit?resourcekey#gid=661338273")
 
 
 ###### ---------- Record type: PROJECT ---------- ######
@@ -36,6 +38,7 @@ names(project) <-
     "Contact name",
     "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
@@ -138,8 +141,9 @@ names(tool) <-
   c(
     "Contact name",
     "Contact email",
-    "Label",
+    "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
@@ -177,6 +181,7 @@ names(publication) <-
     "Publication type",
     "Title",
     "Abstract",
+    "Keywords",
     "Authors",
     "Subjects",
     "Methods",
@@ -218,6 +223,7 @@ names(training) <-
     "Training type",
     "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
@@ -253,6 +259,7 @@ names(archives) <-
     "Contact email",
     "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
@@ -283,6 +290,7 @@ names(learning_material) <-
     "Contact email",
     "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
@@ -318,6 +326,7 @@ names(unclassified) <-
     "Contact email",
     "Name",
     "Description",
+    "Keywords",
     "Subjects",
     "Methods",
     "Organisation",
