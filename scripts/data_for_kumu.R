@@ -9,7 +9,7 @@ library(googlesheets4)
 
 ###### ---------- AUTHORISATIONS ---------- ######
 # this works locally
-gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
+#gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/.secret/GSHEET_ACCESS")
 #gs4_auth(email = "*@talarify.co.za", path = "~/stakeholder_map/sheets_service_account_key.json") # before making the json a secret
 
 # for GitHub Action (adapted from https://github.com/jdtrat/tokencodr-google-demo)
