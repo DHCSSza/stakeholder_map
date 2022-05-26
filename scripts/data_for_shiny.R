@@ -21,8 +21,6 @@ auth_google(email = "*@talarify.co.za",
             token_path = ".secret/GSHEET_ACCESS")
 
 ###### ---------- READ DATA FROM GOOGLE SHEET ---------- ######
-#form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1-2rF3VNdkXzFKPjUwMexedyVFxsamjO-8yAi7AVierY/edit?resourcekey#gid=1694945086")
-
 form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1wuDaWIZD6Mtss-zTEE-zoG4zTx9ZupqaMmc0NBqI8Ls/edit?resourcekey#gid=661338273")
 
 
