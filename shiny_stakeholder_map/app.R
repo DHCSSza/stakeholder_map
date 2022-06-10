@@ -8,6 +8,7 @@ library(shiny)
 library(leaflet)
 library(DT)
 library(tableHTML)
+library(terra)
 
 # usecairo = T from package Cairo for better quality of figures in shiny app
 options(shiny.usecairo=T)
