@@ -42,6 +42,7 @@ jobs:
           install.packages('DT')
           install.packages('tableHTML')
           install.packages('rsconnect')
+          install.packages('terra')
         shell: Rscript {0}
           
       - name: Connect to Shiny
