@@ -35,6 +35,7 @@ jobs:
 
       - name: step-1-install-packages
         run: |
+          install.packages('terra', repos='https://rspatial.r-universe.dev')
           install.packages('tidyverse')
           install.packages('googlesheets4')
           install.packages('shiny')
@@ -42,7 +43,6 @@ jobs:
           install.packages('DT')
           install.packages('tableHTML')
           install.packages('rsconnect')
-          install.packages('terra', repos='https://rspatial.r-universe.dev')
         shell: Rscript {0}
           
       - name: Connect to Shiny
