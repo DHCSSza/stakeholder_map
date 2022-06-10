@@ -12,7 +12,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    #runs-on: macos-latest
+    runs-on: ubuntu-latest
     
     env:
       # set as environment variables, don't worry they will
@@ -35,7 +36,7 @@ jobs:
 
       - name: step-1-install-packages
         run: |
-          install.packages('terra', repos='https://rspatial.r-universe.dev')
+          #install.packages('terra', repos='https://rspatial.r-universe.dev')
           install.packages('tidyverse')
           install.packages('googlesheets4')
           install.packages('shiny')
