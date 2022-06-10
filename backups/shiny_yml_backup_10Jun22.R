@@ -1,0 +1,77 @@
+name: update_shiny
+
+# Controls when the workflow will run
+on:
+  schedule:
+  - cron: "30 04 * * *"
+
+# Allows you to run this workflow manually from the Actions tab
+workflow_dispatch:
+  
+  jobs:
+  # This workflow contains a single job called "build"
+  build:
+  # The type of runner that the job will run on
+  #runs-on: macos-latest
+  runs-on: ubuntu-latest
+
+env:
+  # set as environment variables, don't worry they will
+  # never be printed/echoed in logs
+  SHINY_TOKEN: ${{ secrets.SHINY_TOKEN }}
+SHINY_SECRET: ${{ secrets.SHINY_SECRET }}
+
+# Steps represent a sequence of tasks that will be executed as part of the job
+steps:
+  # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  - name: Checkout
+uses: actions/checkout@v2
+
+- name: setup R
+uses: r-lib/actions/setup-r@master
+with:
+  #r-version: ${{ matrix.config.r }}
+  r-version: '4.1.3'
+http-user-agent: ${{ matrix.config.http-user-agent }}
+
+- name: Install R package remotes
+run: |
+  install.packages('remotes')
+shell: Rscript {0}
+
+- name: Install system dependencies
+if: runner.os == 'Linux'
+run: |
+  while read -r cmd
+do
+eval sudo $cmd
+done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "20.04"), sep = "\n")')
+
+- name: Install packages
+run: |
+  install.packages('rcpp')
+install.packages('terra', repos='https://rspatial.r-universe.dev')
+install.packages('tidyverse')
+install.packages('googlesheets4')
+install.packages('shiny')
+install.packages('leaflet')
+install.packages('DT')
+install.packages('tableHTML')
+install.packages('rsconnect')
+shell: Rscript {0}
+
+- name: Connect to Shiny
+run: |
+  shiny_token = Sys.getenv("SHINY_TOKEN")
+shiny_secret = Sys.getenv("SHINY_SECRET")
+#rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
+rsconnect::setAccountInfo(name='dhcssza-stakeholder-map', token=shiny_token, secret=shiny_secret)
+shell: Rscript {0}
+
+- name: Uploading to shinyapps.io
+#run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'anne-treasure', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
+run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'dhcssza-stakeholder-map', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
+shell: Rscript {0}
+
+
+
