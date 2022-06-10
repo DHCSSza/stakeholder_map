@@ -49,6 +49,7 @@ jobs:
 
       - name: Install packages
         run: |
+          install.packages('rcpp')
           install.packages('terra', repos='https://rspatial.r-universe.dev')
           install.packages('tidyverse')
           install.packages('googlesheets4')
