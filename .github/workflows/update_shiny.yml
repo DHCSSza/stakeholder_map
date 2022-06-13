@@ -34,16 +34,10 @@ jobs:
           #r-version: '4.1.3'
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
-      - name: Install packages
-        run: |
-          install.packages('tidyverse')
-          install.packages('googlesheets4')
-          install.packages('shiny')
-          install.packages('leaflet')
-          install.packages('DT')
-          install.packages('tableHTML')
-          install.packages('rsconnect')
-        shell: Rscript {0}
+      - name: Setup R Dependencies
+        uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          cache-version: 1
           
       - name: Connect to Shiny
         run: |
