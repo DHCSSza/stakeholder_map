@@ -16,8 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      # set as environment variables, don't worry they will
-      # never be printed/echoed in logs
+      # set as environment variables (they will never be printed/echoed in logs)
       SHINY_TOKEN: ${{ secrets.SHINY_TOKEN }}
       SHINY_SECRET: ${{ secrets.SHINY_SECRET }}
 
@@ -30,7 +29,7 @@ jobs:
       - name: setup R
         uses: r-lib/actions/setup-r@v2
         
-      - name: Setup R Dependencies
+      - name: Setup R Dependencies (packages listed in DESCRIPTION file)
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
@@ -44,7 +43,6 @@ jobs:
         shell: Rscript {0}
         
       - name: Uploading to shinyapps.io
-        #run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'anne-treasure', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
         run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'dhcssza-stakeholder-map', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
         shell: Rscript {0}
       

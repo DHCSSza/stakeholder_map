@@ -206,6 +206,7 @@ publication$Subjects <-  gsub('.{1}$', "", publication$Subjects) # remove ; at t
 publication$Methods <- gsub(";, ", "; ", publication$Methods)
 publication$Methods <-  gsub('.{1}$', "", publication$Methods)
 
+publication <- relocate(publication, Authors, .before = Title)
 
 ###### ---------- Record type: TRAINING ---------- ######
 training <- form_data %>%

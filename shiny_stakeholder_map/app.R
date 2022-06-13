@@ -132,16 +132,16 @@ server <- function(input, output){
          datatable(project[(1:(ncol(project)-2))], escape=FALSE, 
                    options = list(
                        pageLength = 20, autoWidth = TRUE,
-                       columnDefs = list(list( targets = c("Description", "Name"), width = '600px')),
+                       columnDefs = list(list(targets = c("Description", "Name"), width = '600px')),
                        scrollX = TRUE
                    ))
      })
     # ----- output (table) for 3nd panel (people table) -----
     output$mytable_person = DT::renderDataTable({
-        datatable(person[(1:(ncol(project)-2))], escape=FALSE, 
+        datatable(person[(1:(ncol(project)-3))], escape=FALSE, #delete lat&long columns for viewing table-needed to delete a 3rd col?
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description", "Subjects", "Methods"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description", "Subjects", "Methods"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -150,7 +150,7 @@ server <- function(input, output){
         datatable(dataset, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -159,7 +159,7 @@ server <- function(input, output){
         datatable(tool, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -168,7 +168,7 @@ server <- function(input, output){
         datatable(publication, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Abstract"), width = '600px')),
+                      columnDefs = (list(list(targets =c("Abstract"), width = '600px'), list(targets =c("Authors", "Title"), width = '200px'))),
                       scrollX = TRUE
                   ))
     })
@@ -177,7 +177,7 @@ server <- function(input, output){
         datatable(training[(1:(ncol(project)-2))], escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -186,7 +186,7 @@ server <- function(input, output){
         datatable(learning_material, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -195,7 +195,7 @@ server <- function(input, output){
         datatable(archives, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
@@ -204,7 +204,7 @@ server <- function(input, output){
         datatable(unclassified, escape=FALSE, 
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
-                      columnDefs = list(list( targets = c("Description"), width = '600px')),
+                      columnDefs = list(list(targets = c("Description"), width = '600px')),
                       scrollX = TRUE
                   ))
     })
