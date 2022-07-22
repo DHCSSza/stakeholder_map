@@ -4,7 +4,6 @@ Version: 0.0.0.9000
 Authors@R: 
     person(given = "Anne",
           family = "Treasure", 
-          email = "anne@talarify.co.za", 
           role = c("aut", "cre"),
           comment = c(ORCID = "0000-0002-8345-4811"))
 Description: What the package does (one paragraph).
