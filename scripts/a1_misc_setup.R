@@ -27,3 +27,11 @@ googlesheets4::gs4_auth(path = tokencodr::decrypt_token(service = "GSHEET_ACCESS
                                                         path = ".secret/GSHEET_ACCESS",
                                                         complete = TRUE))
 
+# Pinning R and R package versions using renv
+library(renv)
+renv::init()
+renv::snapshot()
+
+
+
+
