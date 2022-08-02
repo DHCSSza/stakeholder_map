@@ -16,8 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    #runs-on: ubuntu-latest
-    runs-on: ubuntu-20.04
+    runs-on: macos-latest
     
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -28,10 +27,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Install linux libraries
-        run: sudo apt install libcurl4-openssl-dev libssl-dev libgdal-dev libsodium-dev
-              
+      
       - name: setup R
         uses: r-lib/actions/setup-r@master
         with:
@@ -58,7 +54,6 @@ jobs:
           branch: main
           commit_message: Update Rdata file
           
-        
 ===================================================================
 
 ## THE update_shiny_yml as at 01 Aug 2022, before using renv to pin R and R package versions:
@@ -113,6 +108,8 @@ jobs:
         shell: Rscript {0}
       
           
+
+
 
 
 
