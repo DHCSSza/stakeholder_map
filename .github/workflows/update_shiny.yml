@@ -12,8 +12,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    #runs-on: macos-latest
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     env:
       # set as environment variables (they will never be printed/echoed in logs)
@@ -25,20 +25,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: setup R
-        uses: r-lib/actions/setup-r@v2
         
-      - name: Setup R Dependencies (packages listed in DESCRIPTION file)
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install linux libraries
+        run: sudo apt install libcurl4-openssl-dev libssl-dev libgdal-dev libsodium-dev
+        
+      - name: Setup R Dependencies (using renv.lock)
+        uses: r-lib/actions/setup-renv@v2
         with:
-          cache-version: 2
+          cache-version: 2      
           
       - name: Connect to Shiny
         run: |
           shiny_token = Sys.getenv("SHINY_TOKEN")
           shiny_secret = Sys.getenv("SHINY_SECRET")
-          #rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
           rsconnect::setAccountInfo(name='dhcssza-stakeholder-map', token=shiny_token, secret=shiny_secret)
         shell: Rscript {0}
         

@@ -1,0 +1,118 @@
+
+## THE update_kumu_yml as at 01 Aug 2022, before using renv to pin R and R package versions:
+============================================================================================
+
+name: update_kumu
+
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron: "00 04 * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    #runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GSHEET_ACCESS_PASSWORD: ${{ secrets.GSHEET_ACCESS_PASSWORD }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install linux libraries
+        run: sudo apt install libcurl4-openssl-dev libssl-dev libgdal-dev libsodium-dev
+              
+      - name: setup R
+        uses: r-lib/actions/setup-r@master
+        with:
+          #r-version: ${{ matrix.config.r }}
+          r-version: '4.1.3'
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+
+      - name: step-1-install-packages & Query dependencies
+        run: |
+          install.packages('tidyverse')
+          install.packages('googlesheets4')
+          install.packages('remotes')
+          remotes::install_github("jdtrat/tokencodr")
+        shell: Rscript {0}
+          
+      - name: Run-r-script
+        run: | 
+          Rscript -e "source('scripts/data_for_kumu.R')"
+          Rscript -e "source('scripts/data_for_shiny.R')"
+       
+      - name: Commit RData file
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: main
+          commit_message: Update Rdata file
+          
+        
+===================================================================
+
+## THE update_shiny_yml as at 01 Aug 2022, before using renv to pin R and R package versions:
+============================================================================================
+
+name: update_shiny
+
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron: "30 04 * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    #runs-on: macos-latest
+    runs-on: ubuntu-latest
+    
+    env:
+      # set as environment variables (they will never be printed/echoed in logs)
+      SHINY_TOKEN: ${{ secrets.SHINY_TOKEN }}
+      SHINY_SECRET: ${{ secrets.SHINY_SECRET }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: setup R
+        uses: r-lib/actions/setup-r@v2
+        
+      - name: Setup R Dependencies (packages listed in DESCRIPTION file)
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache-version: 2
+          
+      - name: Connect to Shiny
+        run: |
+          shiny_token = Sys.getenv("SHINY_TOKEN")
+          shiny_secret = Sys.getenv("SHINY_SECRET")
+          #rsconnect::setAccountInfo(name='anne-treasure', token=shiny_token, secret=shiny_secret)
+          rsconnect::setAccountInfo(name='dhcssza-stakeholder-map', token=shiny_token, secret=shiny_secret)
+        shell: Rscript {0}
+        
+      - name: Uploading to shinyapps.io
+        run: rsconnect::deployApp(appDir = "shiny_stakeholder_map", appFiles=c('app.R', 'shiny_data.RData', 'my_map_activ.R'), account = 'dhcssza-stakeholder-map', server = 'shinyapps.io',  getOption("rsconnect.force.update.apps", TRUE))
+        shell: Rscript {0}
+      
+          
+
+
+
