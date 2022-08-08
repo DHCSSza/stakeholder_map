@@ -1,7 +1,7 @@
 
 # STAKEHOLDER MAP PROJECT: script to:
 # - set authorisations to read from a Google spreadsheet (linked to Google Form)
-# - import data from this Google spreadsheet, manipulate and write to new spreadsheets for Shiny
+# - import data from this Google spreadsheet, manipulate and write to an R Data file for Shiny
 
 ###### ---------- LOAD PACKAGES ---------- ######
 library(tidyverse)
@@ -377,7 +377,7 @@ ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv
 locations <- read_sheet(ss, sheet = "Organisation_locations")
 
 
-###### ---------- EXCLUDE DATA SUBMITTER INFO FOR SHINY, MERGE W/LOCATIONS ---------- ######
+###### ---------- MERGE W/LOCATIONS ---------- ######
 project <- project %>%
   merge(locations, by = 'Organisation')
 person <-  person %>%
