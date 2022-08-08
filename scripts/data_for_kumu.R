@@ -21,7 +21,7 @@ auth_google(email = "*@talarify.co.za",
             token_path = ".secret/GSHEET_ACCESS")
 
 ###### ---------- READ DATA FROM GOOGLE SHEET ---------- ######
-form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1wuDaWIZD6Mtss-zTEE-zoG4zTx9ZupqaMmc0NBqI8Ls/edit?resourcekey#gid=661338273")
+form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1UCVAfe5_yHAflSDGt2U9SQwfS42Lq1RTdaJGjy3RZnE/edit?resourcekey#gid=802540909")
 
 
 ###### ---------- Record type: PROJECT ---------- ######

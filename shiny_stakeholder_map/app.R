@@ -87,15 +87,20 @@ ui <- (fluidPage(
                  DT::dataTableOutput("mytable_learning_material")
         ), # end tabPanel 8
         
-        # ----- input for 9th panel (archives table) -----
-        tabPanel('Archives',
-                 DT::dataTableOutput("mytable_archives")
+        # ----- input for 9th panel (infrastructure table) -----
+        tabPanel('Infrastructure',
+                 DT::dataTableOutput("mytable_infrastructure")
         ), # end tabPanel 9
         
-        # ----- input for 10th panel (unclassified table) -----
+        # ----- input for 10th panel (archives table) -----
+        tabPanel('Archives',
+                 DT::dataTableOutput("mytable_archives")
+        ), # end tabPanel 10
+        
+        # ----- input for 11th panel (unclassified table) -----
         tabPanel('Unclassified records',
                  DT::dataTableOutput("mytable_unclassified")
-        ), # end tabPanel 10
+        ), # end tabPanel 11
         
     ) # end tabsetPanel
 )) # end fluidpage
@@ -138,7 +143,7 @@ server <- function(input, output){
      })
     # ----- output (table) for 3nd panel (people table) -----
     output$mytable_person = DT::renderDataTable({
-        datatable(person[(1:(ncol(project)-3))], escape=FALSE, #delete lat&long columns for viewing table-needed to delete a 3rd col?
+        datatable(person[(1:(ncol(project)-3))], escape=FALSE,
                   options = list(
                       pageLength = 20, autoWidth = TRUE,
                       columnDefs = list(list(targets = c("Description", "Subjects", "Methods"), width = '600px')),
@@ -190,7 +195,16 @@ server <- function(input, output){
                       scrollX = TRUE
                   ))
     })
-    # ----- output (table) for 9th panel (archives table) -----
+    # ----- output (table) for 9th panel (infrastructure table) -----
+    output$mytable_infrastructure = DT::renderDataTable({
+      datatable(infrastructure, escape=FALSE, 
+                options = list(
+                  pageLength = 20, autoWidth = TRUE,
+                  columnDefs = list(list(targets = c("Description"), width = '600px')),
+                  scrollX = TRUE
+                ))
+    })
+    # ----- output (table) for 10th panel (archives table) -----
     output$mytable_archives = DT::renderDataTable({
         datatable(archives, escape=FALSE, 
                   options = list(
@@ -199,7 +213,7 @@ server <- function(input, output){
                       scrollX = TRUE
                   ))
     })
-    # ----- output (table) for 10th panel (unclassified table) -----
+    # ----- output (table) for 11th panel (unclassified table) -----
     output$mytable_unclassified = DT::renderDataTable({
         datatable(unclassified, escape=FALSE, 
                   options = list(

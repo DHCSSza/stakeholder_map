@@ -21,7 +21,7 @@ auth_google(email = "*@talarify.co.za",
             token_path = ".secret/GSHEET_ACCESS")
 
 ###### ---------- READ DATA FROM GOOGLE SHEET ---------- ######
-form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1wuDaWIZD6Mtss-zTEE-zoG4zTx9ZupqaMmc0NBqI8Ls/edit?resourcekey#gid=661338273")
+form_data <- read_sheet("https://docs.google.com/spreadsheets/d/1UCVAfe5_yHAflSDGt2U9SQwfS42Lq1RTdaJGjy3RZnE/edit?resourcekey#gid=802540909")
 
 
 ###### ---------- Record type: PROJECT ---------- ######
@@ -343,6 +343,35 @@ unclassified$Methods <- gsub(";, ", "; ", unclassified$Methods)
 unclassified$Methods <-  gsub('.{1}$', "", unclassified$Methods)
 
 
+###### ---------- Record type: INFRASTRUCTURE ---------- ######
+infrastructure <- form_data %>%
+  filter(`1._What is the type of record you are submitting?` == "Infrastructure") %>%
+  select(starts_with(c("1.", "13"))) %>%
+  unite("Contact name", c(6,4:5), sep = " ", remove = FALSE) %>%
+  select(-c(1:3, 5:7))
+
+names(infrastructure) <-
+  c(
+    "Contact name",
+    "Contact email",
+    "Name",
+    "URL",
+    "Description",
+    "Keywords",
+    "Services",
+    "Subjects",
+    "Methods",
+    "Organisation",
+    "Organisation_other"
+  )
+
+# fix punctuation for subject area & methods
+infrastructure$Subjects <- gsub(";, ", "; ", infrastructure$Subjects)
+infrastructure$Subjects <-  gsub('.{1}$', "", infrastructure$Subjects) # remove ; at the end
+infrastructure$Methods <- gsub(";, ", "; ", infrastructure$Methods)
+infrastructure$Methods <-  gsub('.{1}$', "", infrastructure$Methods)
+
+
 ####### ------- READ in GOOGLE SHEET DATA FOR LOCATIONS ------- #######
 ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"
 locations <- read_sheet(ss, sheet = "Organisation_locations")
@@ -361,8 +390,9 @@ training <-  training %>%
 #archives <- archives %>%
 #learning_material <- learning_material %>%
 #unclassified <- unclassified %>%
+#infrastructure <- infrastructure %>% 
 
 ### SAVE RDATA FILE
-save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, file = "shiny_stakeholder_map/shiny_data.RData")
+save(project, person, dataset, tool, publication, training, archives, learning_material, unclassified, infrastructure, file = "shiny_stakeholder_map/shiny_data.RData")
 
 
