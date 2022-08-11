@@ -57,6 +57,8 @@ project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
 project$Methods <- gsub(";, ", "; ", project$Methods)
 project$Methods <-  gsub('.{1}$', "", project$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+project$`Contact name` <- gsub("na na na", " ", project$`Contact name`)
 
 ###### ---------- Record type: PERSON ---------- ######
 person <- form_data %>%
@@ -127,6 +129,8 @@ dataset$Subjects <-  gsub('.{1}$', "", dataset$Subjects) # remove ; at the end
 dataset$Methods <- gsub(";, ", "; ", dataset$Methods)
 dataset$Methods <-  gsub('.{1}$', "", dataset$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+dataset$`Contact name` <- gsub("na na na", " ", dataset$`Contact name`)
 
 ###### ---------- Record type: TOOL ---------- ######
 tool <- form_data %>%
@@ -167,6 +171,8 @@ tool$Subjects <-  gsub('.{1}$', "", tool$Subjects) # remove ; at the end
 tool$Methods <- gsub(";, ", "; ", tool$Methods)
 tool$Methods <-  gsub('.{1}$', "", tool$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+tool$`Contact name` <- gsub("na na na", " ", tool$`Contact name`)
 
 ###### ---------- Record type: PUBLICATION ---------- ######
 publication <- form_data %>%
@@ -245,6 +251,9 @@ training$Subjects <-  gsub('.{1}$', "", training$Subjects) # remove ; at the end
 training$Methods <- gsub(";, ", "; ", training$Methods)
 training$Methods <-  gsub('.{1}$', "", training$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+training$`Contact name` <- gsub("na na na", " ", training$`Contact name`)
+
 ###### ---------- Record type: ARCHIVES ---------- ######
 archives <- form_data %>%
   filter(`1._What is the type of record you are submitting?` == "Archives") %>%
@@ -275,6 +284,8 @@ archives$Subjects <-  gsub('.{1}$', "", archives$Subjects) # remove ; at the end
 archives$Methods <- gsub(";, ", "; ", archives$Methods)
 archives$Methods <-  gsub('.{1}$', "", archives$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+archives$`Contact name` <- gsub("na na na", " ", archives$`Contact name`)
 
 ###### ---------- Record type: LEARNING MATERIAL ---------- ######
 learning_material <- form_data %>%
@@ -311,6 +322,8 @@ learning_material$Subjects <-  gsub('.{1}$', "", learning_material$Subjects) # r
 learning_material$Methods <- gsub(";, ", "; ", learning_material$Methods)
 learning_material$Methods <-  gsub('.{1}$', "", learning_material$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+learning_material$`Contact name` <- gsub("na na na", " ", learning_material$`Contact name`)
 
 ###### ---------- Record type: UNCLASSIFIED ---------- ######
 unclassified <- form_data %>%
@@ -342,6 +355,8 @@ unclassified$Subjects <-  gsub('.{1}$', "", unclassified$Subjects) # remove ; at
 unclassified$Methods <- gsub(";, ", "; ", unclassified$Methods)
 unclassified$Methods <-  gsub('.{1}$', "", unclassified$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+unclassified$`Contact name` <- gsub("na na na", " ", unclassified$`Contact name`)
 
 ###### ---------- Record type: INFRASTRUCTURE ---------- ######
 infrastructure <- form_data %>%
@@ -371,6 +386,8 @@ infrastructure$Subjects <-  gsub('.{1}$', "", infrastructure$Subjects) # remove 
 infrastructure$Methods <- gsub(";, ", "; ", infrastructure$Methods)
 infrastructure$Methods <-  gsub('.{1}$', "", infrastructure$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+infrastructure$`Contact name` <- gsub("na na na", " ", infrastructure$`Contact name`)
 
 ####### ------- READ in GOOGLE SHEET DATA FOR LOCATIONS ------- #######
 ss = "https://docs.google.com/spreadsheets/d/1fUf6SbWQttVVCUAZ2jH9z24qua1BqO05Qv2lLNllsCU/edit#gid=0"

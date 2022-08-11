@@ -60,6 +60,8 @@ project$Subjects <-  gsub('.{1}$', "", project$Subjects) # remove ; at the end
 project$Methods <- gsub(";, ", "; ", project$Methods)
 project$Methods <-  gsub('.{1}$', "", project$Methods)
 
+# if no contact name, remove 'na na na' (replace with space)
+project$`Contact name` <- gsub("na na na", " ", project$`Contact name`)
 
 ###### ---------- Record type: PERSON ---------- ######
 person <- form_data %>%
