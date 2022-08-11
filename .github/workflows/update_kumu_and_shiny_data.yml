@@ -1,4 +1,4 @@
-name: update_kumu
+name: update_kumu_and_shiny_data
 
 # Controls when the workflow will run
 on:

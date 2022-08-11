@@ -1,4 +1,4 @@
-name: update_shiny
+name: deploy_shiny
 
 # Controls when the workflow will run
 on:
