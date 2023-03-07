@@ -1,9 +1,5 @@
 name: update_kumu_and_shiny_data
 
-runs:
-  using: 'node16'
-  main: 'main.js'
-
 # Controls when the workflow will run
 on:
   schedule:
